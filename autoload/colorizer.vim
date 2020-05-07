@@ -30,7 +30,7 @@ function! s:Rgb2xterm(color) "{{{1
   let g = str2nr(a:color[3:4], 16)
   let b = str2nr(a:color[5:6], 16)
   let colortable = s:GetXterm2rgbTable()
-  for c in range(0,254)
+  for c in range(0,255)
     let d = pow(colortable[c][0]-r,2) + pow(colortable[c][1]-g,2) + pow(colortable[c][2]-b,2)
     if d<smallest_distance
       let smallest_distance = d
@@ -66,7 +66,7 @@ function! s:Xterm2rgb(color) "{{{1
   endif
 
   " color cube color
-  if a:color>=16 && a:color<=232
+  if a:color>=16 && a:color<=231
     let l:color=a:color-16
     let r = s:valuerange[(l:color/36)%6]
     let g = s:valuerange[(l:color/6)%6]
@@ -74,7 +74,7 @@ function! s:Xterm2rgb(color) "{{{1
   endif
 
   " gray tone
-  if a:color>=233 && a:color<=253
+  if a:color>=232 && a:color<=255
     let r=8+(a:color-232)*0x0a
     let g=r
     let b=r
@@ -436,7 +436,7 @@ endfunction
 function! s:GetXterm2rgbTable() "{{{1
   if !exists('s:table_xterm2rgb')
     let s:table_xterm2rgb = []
-    for c in range(0, 254)
+    for c in range(0, 255)
       let s:color = s:Xterm2rgb(c)
       call add(s:table_xterm2rgb, s:color)
     endfor
